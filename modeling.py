@@ -1,4 +1,5 @@
 import numpy as np
+import networkx as nx  # Добавлен импорт NetworkX
 from scipy.integrate import solve_ivp
 
 def hill_function(x, k, n):
