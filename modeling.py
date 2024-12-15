@@ -22,9 +22,10 @@ def system_of_equations(t, y, params):
     """
     dydt = []
     for i, _ in enumerate(y):
-        activation = sum(hill_function(y[j], params["k"][j], params["n"][j]) for j in params["activators"][i])
-        inhibition = sum(hill_function(y[j], params["k"][j], params["n"][j]) for j in params["inhibitors"][i])
-        decay = params["decay"][i] * y[i]
+        # Для каждого узла i, находим активацию и ингибирование
+        activation = sum(hill_function(y[j], params["k"][str(j)], params["n"][str(j)]) for j in params["activators"].get(str(i), []))
+        inhibition = sum(hill_function(y[j], params["k"][str(j)], params["n"][str(j)]) for j in params["inhibitors"].get(str(i), []))
+        decay = params["decay"].get(str(i), 0.1) * y[i]  # Если decay не указан, используем значение по умолчанию (0.1)
         dydt.append(activation - inhibition - decay)
     return dydt
 
